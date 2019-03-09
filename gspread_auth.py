@@ -15,5 +15,8 @@ def get_sheet():
     # all_records = sheet.get_all_records()
     # returns list of dictionaries for each row with {col1: value, col2:val2, etc}
     # sheet.findall("Strength")
-    # 
+    # records = sheet.get_all_records()
+    # strength_workouts = []
+    # [strength_workouts.append(i) for i in records if i['Training Type'] == 'Strength'] 
+    
     
