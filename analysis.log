@@ -1,0 +1,147 @@
+DEBUG:__main__:              Timestamp    Short Name Training Type Aerobic Type  \
+8   22/02/2019 11:20:46           1.1      Strength          NaN   
+11  23/02/2019 21:57:53           1.2      Strength          NaN   
+14  26/02/2019 15:02:45  Strength 2.1      Strength          NaN   
+18  02/03/2019 10:39:40  Strength 2.2      Strength          NaN   
+
+    Speed (treadmill)  Duration (min)  Weight (lbs)  Stepmaster (min)  \
+8                 NaN             NaN           NaN               NaN   
+11                NaN             NaN           NaN               NaN   
+14                NaN             NaN           NaN               NaN   
+18                NaN             NaN           NaN               NaN   
+
+    Stepmaster (lbs)  HRZ        ...        Horizontal Push Up (Reps) [15]  \
+8                NaN  NaN        ...                                   5.0   
+11               NaN  NaN        ...                                   5.0   
+14               NaN  NaN        ...                                   NaN   
+18               NaN  NaN        ...                                   NaN   
+
+   Horizontal Push Up (Weight) Deadlift (Reps) [10]  Deadlift (Weight)  \
+8                          0.0                  NaN                NaN   
+11                         NaN                   10              135.0   
+14                         NaN                  NaN                NaN   
+18                         NaN                  10+              145.0   
+
+   Duration (min).1 # Circuits  Horizontal Push Up (Progression)  Period  \
+8              60.0        1.0                               NaN     NaN   
+11             60.0        1.0                     Legs Elevated     NaN   
+14             60.0        1.0                               NaN     NaN   
+18             60.0        1.0                               NaN     NaN   
+
+    Week in Period Workout # in Week  
+8              NaN               NaN  
+11             NaN               NaN  
+14             NaN               NaN  
+18             NaN               NaN  
+
+[4 rows x 61 columns]
+INFO:__main__:Finding Lifts...
+INFO:__main__:<lifts> = ['Box Step Up', 'Squat', 'Horizontal Push Up', 'Dips', 'Push Up', 'Deadlift', 'Wall Facing Squat', 'Split Bench Squat', 'Isometric Hang Pinchers', 'Turkish Get-Up', 'Hanging Leg Raise', 'Pull Up']
+DEBUG:__main__:looking at row for workout on 22/02/2019 11:20:46
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Box Step Up', 'Weight (lbs)': array([ 30.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Squat', 'Weight (lbs)': array([ 95.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Horizontal Push Up', 'Progression': array([nan], dtype=object), 'Weight (lbs)': array([ 0.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Dips', 'Weight (lbs)': array([ 0.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Push Up', 'Progression': array(['Foot Elevated'], dtype=object)}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Deadlift', 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Wall Facing Squat', 'Weight (lbs)': array([ 0.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Split Bench Squat', 'Weight (lbs)': array([ 30.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Isometric Hang Pinchers'}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Turkish Get-Up', 'Weight (lbs)': array([ 20.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Hanging Leg Raise', 'Weight (lbs)': array([ 0.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '22/02/2019 11:20:46', 'Lift': 'Pull Up', 'Progression': array(['Regular'], dtype=object), 'Weight (lbs)': array([ 0.])}
+DEBUG:__main__:looking at row for workout on 23/02/2019 21:57:53
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Box Step Up', 'Weight (lbs)': array([ 40.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Squat', 'Weight (lbs)': array([ 95.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Horizontal Push Up', 'Progression': array(['Legs Elevated'], dtype=object), 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Dips', 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Push Up', 'Progression': array(['Foot Elevated'], dtype=object)}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Deadlift', 'Weight (lbs)': array([ 135.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Wall Facing Squat', 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Split Bench Squat', 'Weight (lbs)': array([ 30.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Isometric Hang Pinchers'}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Turkish Get-Up', 'Weight (lbs)': array([ 22.5])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Hanging Leg Raise', 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '23/02/2019 21:57:53', 'Lift': 'Pull Up', 'Progression': array(['Lock Off'], dtype=object), 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:looking at row for workout on 26/02/2019 15:02:45
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Box Step Up', 'Weight (lbs)': array([ 40.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Squat', 'Weight (lbs)': array([ 115.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Horizontal Push Up', 'Progression': array([nan], dtype=object), 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Dips', 'Weight (lbs)': array([ 0.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Push Up', 'Progression': array(['Foot Elevated'], dtype=object)}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Deadlift', 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Wall Facing Squat', 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Split Bench Squat', 'Weight (lbs)': array([ 40.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Isometric Hang Pinchers'}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Turkish Get-Up', 'Weight (lbs)': array([ 25.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Hanging Leg Raise', 'Weight (lbs)': array([ 0.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '26/02/2019 15:02:45', 'Lift': 'Pull Up', 'Progression': array(['Lock Off'], dtype=object), 'Weight (lbs)': array([ 0.])}
+DEBUG:__main__:looking at row for workout on 02/03/2019 10:39:40
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Box Step Up', 'Weight (lbs)': array([ 60.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Squat', 'Weight (lbs)': array([ 135.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Horizontal Push Up', 'Progression': array([nan], dtype=object), 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Dips', 'Weight (lbs)': array([ 8.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Push Up', 'Progression': array(['Foot Elevated'], dtype=object)}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Deadlift', 'Weight (lbs)': array([ 145.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Wall Facing Squat', 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Split Bench Squat', 'Weight (lbs)': array([ 50.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Isometric Hang Pinchers'}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Turkish Get-Up', 'Weight (lbs)': array([ 25.])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Hanging Leg Raise', 'Weight (lbs)': array([ nan])}
+DEBUG:__main__:variable <adictchild> = {'Timestamp': '02/03/2019 10:39:40', 'Lift': 'Pull Up', 'Progression': array(['Lock Off'], dtype=object), 'Weight (lbs)': array([ nan])}
+WARNING:__main__:Unfound Columns for (Reps): 
+['Box Step Up (Reps)', 'Squat (Reps)', 'Horizontal Push Up (Reps)', 'Dips (Reps)', 'Push Up (Reps)', 'Deadlift (Reps)', 'Wall Facing Squat (Reps)', 'Split Bench Squat (Reps)', 'Isometric Hang Pinchers (Reps)', 'Turkish Get-Up (Reps)', 'Hanging Leg Raise (Reps)', 'Pull Up (Reps)']
+WARNING:__main__:Unfound Columns for (Weight): 
+['Push Up (Weight)', 'Isometric Hang Pinchers (Weight)']
+WARNING:__main__:Unfound Columns for (Progression): 
+['Box Step Up (Progression)', 'Squat (Progression)', 'Dips (Progression)', 'Deadlift (Progression)', 'Wall Facing Squat (Progression)', 'Split Bench Squat (Progression)', 'Isometric Hang Pinchers (Progression)', 'Turkish Get-Up (Progression)', 'Hanging Leg Raise (Progression)']
+DEBUG:__main__:Printing <df_liftimize>
+DEBUG:__main__:                       Lift      Progression            Timestamp Weight (lbs)
+0               Box Step Up              NaN  22/02/2019 11:20:46       [30.0]
+1                     Squat              NaN  22/02/2019 11:20:46       [95.0]
+2        Horizontal Push Up            [nan]  22/02/2019 11:20:46        [0.0]
+3                      Dips              NaN  22/02/2019 11:20:46        [0.0]
+4                   Push Up  [Foot Elevated]  22/02/2019 11:20:46          NaN
+5                  Deadlift              NaN  22/02/2019 11:20:46        [nan]
+6         Wall Facing Squat              NaN  22/02/2019 11:20:46        [0.0]
+7         Split Bench Squat              NaN  22/02/2019 11:20:46       [30.0]
+8   Isometric Hang Pinchers              NaN  22/02/2019 11:20:46          NaN
+9            Turkish Get-Up              NaN  22/02/2019 11:20:46       [20.0]
+10        Hanging Leg Raise              NaN  22/02/2019 11:20:46        [0.0]
+11                  Pull Up        [Regular]  22/02/2019 11:20:46        [0.0]
+12              Box Step Up              NaN  23/02/2019 21:57:53       [40.0]
+13                    Squat              NaN  23/02/2019 21:57:53       [95.0]
+14       Horizontal Push Up  [Legs Elevated]  23/02/2019 21:57:53        [nan]
+15                     Dips              NaN  23/02/2019 21:57:53        [nan]
+16                  Push Up  [Foot Elevated]  23/02/2019 21:57:53          NaN
+17                 Deadlift              NaN  23/02/2019 21:57:53      [135.0]
+18        Wall Facing Squat              NaN  23/02/2019 21:57:53        [nan]
+19        Split Bench Squat              NaN  23/02/2019 21:57:53       [30.0]
+20  Isometric Hang Pinchers              NaN  23/02/2019 21:57:53          NaN
+21           Turkish Get-Up              NaN  23/02/2019 21:57:53       [22.5]
+22        Hanging Leg Raise              NaN  23/02/2019 21:57:53        [nan]
+23                  Pull Up       [Lock Off]  23/02/2019 21:57:53        [nan]
+24              Box Step Up              NaN  26/02/2019 15:02:45       [40.0]
+25                    Squat              NaN  26/02/2019 15:02:45      [115.0]
+26       Horizontal Push Up            [nan]  26/02/2019 15:02:45        [nan]
+27                     Dips              NaN  26/02/2019 15:02:45        [0.0]
+28                  Push Up  [Foot Elevated]  26/02/2019 15:02:45          NaN
+29                 Deadlift              NaN  26/02/2019 15:02:45        [nan]
+30        Wall Facing Squat              NaN  26/02/2019 15:02:45        [nan]
+31        Split Bench Squat              NaN  26/02/2019 15:02:45       [40.0]
+32  Isometric Hang Pinchers              NaN  26/02/2019 15:02:45          NaN
+33           Turkish Get-Up              NaN  26/02/2019 15:02:45       [25.0]
+34        Hanging Leg Raise              NaN  26/02/2019 15:02:45        [0.0]
+35                  Pull Up       [Lock Off]  26/02/2019 15:02:45        [0.0]
+36              Box Step Up              NaN  02/03/2019 10:39:40       [60.0]
+37                    Squat              NaN  02/03/2019 10:39:40      [135.0]
+38       Horizontal Push Up            [nan]  02/03/2019 10:39:40        [nan]
+39                     Dips              NaN  02/03/2019 10:39:40        [8.0]
+40                  Push Up  [Foot Elevated]  02/03/2019 10:39:40          NaN
+41                 Deadlift              NaN  02/03/2019 10:39:40      [145.0]
+42        Wall Facing Squat              NaN  02/03/2019 10:39:40        [nan]
+43        Split Bench Squat              NaN  02/03/2019 10:39:40       [50.0]
+44  Isometric Hang Pinchers              NaN  02/03/2019 10:39:40          NaN
+45           Turkish Get-Up              NaN  02/03/2019 10:39:40       [25.0]
+46        Hanging Leg Raise              NaN  02/03/2019 10:39:40        [nan]
+47                  Pull Up       [Lock Off]  02/03/2019 10:39:40        [nan]
