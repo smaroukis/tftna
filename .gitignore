@@ -4,3 +4,4 @@ client_secret.json
 token.pickle
 . .. .git .gitignore .~lock.df_liftimize.csv#
 sa-client_secret.json
+*.pyc

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+        Testing...
+        </title>
+    </head>
+    <body>
+        <div>
+            <p> Date of Past Workouts </p>
+            <ul>
+                {% for i in workouts %}
+                <li> {{i["Timestamp"]}} </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </body>
+
+</html>
