@@ -3,9 +3,10 @@ import jinja2
 import logging
 from oauth2client.service_account import ServiceAccountCredentials
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+import pickle
 
 
-def get_sheet():
+def get_records():
     ## Auth Flow
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     creds = ServiceAccountCredentials.from_json_keyfile_name('sa-client_secret.json', scope)
@@ -15,6 +16,8 @@ def get_sheet():
     sheet_name = 'TFTNA Log (Responses)'
     sheet = client.open(sheet_name).sheet1
     all_records = sheet.get_all_records()
+    pickle.dump( all_records, open("records_retr_3-12-19.p", "wb"))
+    logger.info("Pickle Stored")
 
     return all_records
     # all_records = sheet.get_all_records()
@@ -33,7 +36,7 @@ if __name__=="__main__":
     logger = logging.getLogger(__name__)
 
     # Google Sheets Auth
-    records = get_sheet()
+    records = get_records()
     logger.debug(' Printing Records: (len={}, type={})'.format(len(records), type(records)))
     for i in records:
         logger.debug(i)

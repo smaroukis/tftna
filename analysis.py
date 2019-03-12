@@ -2,23 +2,26 @@ import pandas as pd
 import csv
 import re
 import logging
+from gspread_auth_w_jinja import get_records
 
-logging.basicConfig(level=logging.DEBUG, filename='analysis.log', filemode='w')
+logging.basicConfig(level=logging.DEBUG, filename='logs/analysis.log', filemode='w')
 console = logging.StreamHandler()
 console.setLevel(logging.WARNING)
 logging.getLogger('').addHandler(console)
 logger = logging.getLogger(__name__)
 
 # TODO: Force int or str in weights / reps / progression 
+# TODO: Wihtout pandas
 
-def get_lifts(df):
+def get_lifts(records):
 
     logger.info('Finding Lifts...')
     pattern=re.compile('Turkish*|Split*|Push*|Box*|Pull*|Squat*|Hanging*|Dips*|Wall*|Isometric*|Horizontal*|Deadlift*')
 
     lift_fields = []
     other_fields = []
-    for col in df.columns:
+    #for col in df.columns:
+    for col in records[0].keys(): # TODO: C/RUN here
         if pattern.search(col):
             lift_fields.append(col) # more efficient to parse workout vs reps/wgt here
         else:
@@ -28,6 +31,7 @@ def get_lifts(df):
     lifts = []
     for i in lift_fields:
         lifts.append(i.split('(')[0].strip())
+        # reps.append(i.split('[')[-1].strip())
 
     lifts = list(set(lifts))
     logger.info('<lifts> = ' + str(lifts))
@@ -44,12 +48,14 @@ def to_keyname(_list):
 
 def m():
     ## MAIN ##
-    fname = 'strength_sandbox.csv'
+    fname = 'data/TFTNA Log (Responses) - Responses.csv'
 
-    df = pd.read_csv(fname)
-    df = df[df['Training Type'] == 'Strength']
-    logger.debug(df)
-    lifts = get_lifts(df)
+    # df = pd.read_csv(fname)
+    # df = df[df['Training Type'] == 'Strength']
+    # logger.debug(df)
+    # lifts = get_lifts(df)
+    records = get_records()
+    lifts = get_lifts(records)
 
     alistparent = []
     for i,row in df.iterrows():
@@ -104,4 +110,4 @@ def m():
 
 if __name__=="__main__":
     df = m()
-    df.to_csv('df_liftimize.csv')
+    df.to_csv('data/df_liftimize.csv')
