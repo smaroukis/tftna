@@ -1,0 +1,10 @@
+DEBUG:oauth2client.crypt:[b'eyJhbGciOiJSUzI1NiIsImtpZCI6ImQyYTAwYzViZTQ1NjZiYmFjMGRkZWQ0ZTg2ZDJjMjJkZTI4ODk0NjAiLCJ0eXAiOiJKV1QifQ', b'eyJleHAiOjE1NTI2OTc0ODcsInNjb3BlIjoiaHR0cHM6Ly9zcHJlYWRzaGVldHMuZ29vZ2xlLmNvbS9mZWVkcyBodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2RyaXZlIiwiaWF0IjoxNTUyNjkzODg3LCJpc3MiOiJzaGVldC1hY2Nlc3NAdGZ0bmEtMjMzOTE4LmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9vYXV0aDIuZ29vZ2xlYXBpcy5jb20vdG9rZW4ifQ', b'Hw6BuNKXgR6Neuqs6fUtOc7Jud5bEbIZ1xtjBxHXGopyOatjt87OJEg7MT5fE3hA5Od3_GrNIVP9s0qH5UJAx9oqAgM0b9Ii1zp0bv0p1_5GPzW5hn9-NqWmdhFGvpv4ZOluQlrC8-dP7UbTUV3RnLj97Cga9pDJqwwqO7E5iNc-WM2yOE0L0p7gRZyH7LKPmNEDylBuDnkc2OTL1RHOgSP6dF2nOYQnNpZCu_95HVXBYbnpXeN6Kc9RzKR7ccMVERiP_UTV94FG0qEvUiA73TDLUF2cVTV1gzYwfVmOvl7uhmrVIpIx_a9ZWKagtB7TaCaUgWEUpLo5J0SOBuT8-w']
+INFO:oauth2client.client:Refreshing access_token
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): www.googleapis.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /drive/v3/files?supportsTeamDrives=True&includeTeamDriveItems=True&q=mimeType%3D%27application%2Fvnd.google-apps.spreadsheet%27&pageSize=1000 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): sheets.googleapis.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /v4/spreadsheets/1NtUtiJrBip1o2ejeLLnI1OeA5iDUu-gNG8xcVqsoXnE?includeGridData=false HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"GET /v4/spreadsheets/1NtUtiJrBip1o2ejeLLnI1OeA5iDUu-gNG8xcVqsoXnE/values/Responses HTTP/1.1" 200 None
+INFO:__main__:Finding Lifts...
+INFO:__main__:<lifts> = ['Pull Up', 'Box Step Up', 'Horizontal Push Up', 'Split Bench Squat', 'Dips', 'Wall Facing Squat', 'Hanging Leg Raise', 'Push Up', 'Turkish Get-Up', 'Squat', 'Bodyweight', 'Isometric Hang Pinchers', 'Deadlift']
+DEBUG:__main__:looking at row for workout on 2/1/2019 8:54:57
