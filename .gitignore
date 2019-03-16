@@ -5,3 +5,4 @@ token.pickle
 . .. .git .gitignore .~lock.df_liftimize.csv#
 sa-client_secret.json
 *.pyc
+.vscode/launch.json .vscode/settings.json
