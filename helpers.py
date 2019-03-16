@@ -3,6 +3,10 @@ import sys
 import re
 import logging
 
+logging.basicConfig(level=logging.DEBUG, filename='logs/helpers.log', filemode='w')
+console = logging.StreamHandler()
+console.setLevel(logging.WARNING)
+logging.getLogger('').addHandler(console)
 logger = logging.getLogger(__name__)
 
 def get_training_week(compare_date, start_date='2-18-2019'):
@@ -70,6 +74,51 @@ def to_keyname(_list):
     return newlist
 
 
+def create_wo_id(workouts_dict, X):
+    """
+    : workouts_dict : dict where the keys are in the form X.Y, where X and Y are both single digit integers
+    : X : the integer preceding the dot, signifying e.g. the week 
+    """  
+    if len(workouts_dict) == 0:
+        return '1.1'
+
+    wo_id = ''
+    for k in sorted(workouts_dict.keys(), reverse=True): # i.e. 2.2, 2.1, 1.2, 1.1
+        logger.debug(k)
+        if X > float(k):
+            wo_id = '{}.1'.format(X)
+            return wo_id
+
+        match = re.search(r'({}).(\d)'.format(X), k)
+        if match:
+            ndotm = match.groups()
+            logger.debug(match)
+            logger.debug(ndotm)
+            n = ndotm[0]
+            m = ndotm[1]
+            assert n == str(X), 'Error in Creating Workout Identifier'
+            wo_id = '{}.{}'.format(n, int()+1)
+            return wo_id
+            
+    sys.stderr.write('Could not create workout ID, 0.0 being used:')
+    return '0.0'
+
+
 if __name__=="__main__":
-    week_no = get_training_week('3-15-2019')
-    print(week_no)
+
+
+    d = {'1.1':{}, '1.2':{}, '1.3':{}, '1.10':{}, '2.1':{}, '2.2':{}, '2.3':{}, '3.1':{}}
+    print('testing with week=1')
+    print(create_wo_id(d, 1))
+    print('testing with week=2')
+    print(create_wo_id(d, 2))
+    print('testing with week=3')
+    print(create_wo_id(d, 3))
+    print('testing with week=4')
+    print(create_wo_id(d, 4))
+    d = {}
+    print('testing with week=1')
+    print(create_wo_id(d, 1))
+    d = {'hello':'a'}
+    print('testing with week=1')
+    print(create_wo_id(d, 1))

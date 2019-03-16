@@ -2,7 +2,7 @@ import pandas as pd
 import csv
 import logging
 from gspread_auth_w_jinja import get_records
-from helpers import get_training_week, get_lifts
+from helpers import get_training_week, get_lifts, create_wo_id
 
 logging.basicConfig(level=logging.DEBUG, filename='logs/analysis.log', filemode='w')
 console = logging.StreamHandler()
@@ -71,8 +71,9 @@ def m():
             logger.debug('variable <adictchild> = ' + str(adictchild))
             alistparent.append(adictchild)
         
-        # TODO: Dynamically make a unique key for each workout with <weeknum>.<workoutnum>
-        workouts_dict.update('4.1': <dict> )
+        id = create_wo_id(workouts_dict, week_tot)
+        workouts_dict[id] = aworkout_dict
+        logger.debug(aworkout_dict)
 
 
     logger.warning('Unfound Columns for (Reps): \n' + str(nf_reps))
