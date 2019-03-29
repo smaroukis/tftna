@@ -5,6 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import pickle
 import logging
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +19,13 @@ def get_records():
     sheet_name = 'TFTNA Log (Responses)'
     sheet = client.open(sheet_name).sheet1
     all_records = sheet.get_all_records()
+
+    all_records_as_dict = dict()
+    for i in range(0,len(all_records)):
+        all_records_as_dict[i] = all_records[i]
+
+    with open ( 'records_raw.json', 'w') as f:
+        json.dump(all_records_as_dict, f)
 
     return all_records
     # all_records = sheet.get_all_records()
