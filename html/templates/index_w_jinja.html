@@ -1,18 +1,33 @@
 <!DOCTYPE html>
+
+
 <html>
     <head>
+        <link rel="stylesheet" href="css/skeleton.css">
+        <link rel="stylesheet" href="css/normalize.css">
         <title>
         Testing...
         </title>
     </head>
     <body>
-        <div>
-            <p> Date of Past Workouts </p>
-            <ul>
-                {% for i in workouts %}
-                <li> {{i["Timestamp"]}} </li> <!-- TODO: print Workout | Reps | Weight -->
+        <div class="container">
+            <h1> Training Hours By Week </h1>
+            <table class="u-full-width">
+            <thead>
+                {% for c in actuals_headers %}
+                <th> {{ c }} </th>
                 {% endfor %}
-            </ul>
+            </thead>
+            {% for key in actuals.keys() %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{actuals[key]["Duration"]}}</td>
+                {% for wo_type in actuals_headers[2:] %}
+                    <td>{{actuals[key][wo_type]["Duration"] if actuals[key][wo_type]["Duration"] is number else "0"}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </table>
         </div>
     </body>
 

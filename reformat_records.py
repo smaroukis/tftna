@@ -2,7 +2,6 @@ import pandas as pd
 import csv
 import json
 import logging
-from gspread_auth_w_jinja import get_records
 from helpers import get_training_week, get_lifts, create_wo_id
 from collections import defaultdict # for easy creation of nested dicts
 adict = lambda: defaultdict(adict) # usage: newdict = adict()
@@ -33,13 +32,17 @@ def format_records(records):
         notes = aworkout.get('Notes')
         grade = aworkout.get('Grade')
         duration = aworkout.get('Duration (min)')
+        if duration == '':
+            duration = 0
         if aworkout.get('Abs?') == 'Y':
             abs=1
         else:
             abs=0
 
-        name = '{}-{}-{}-{}'.format(date, wo_type.lower(), period.lower(), week_pd)  # date-workout-period-week
-        aworkout_dict = dict(zip(['Name','Type', wo_type, 'Week', 'Period','Week in Period', 'Notes', 'Grade', 'Duration', 'Abs'],[name, wo_type, adict(), week_tot, period, week_pd, notes, grade, duration, abs]))
+        descr = aworkout.get('Short Name', '')
+        if descr == '': 
+            descr = '{}{}{}Wk{}'.format(date, wo_type, period, week_pd)  # date-workout-period-week
+        aworkout_dict = dict(zip(['Description', 'Date', 'Type', wo_type, 'Week', 'Period','Week in Period', 'Notes', 'Grade', 'Duration', 'Abs'],[descr, date, wo_type, adict(), week_tot, period, week_pd, notes, grade, duration, abs]))
 
         if wo_type == 'Strength':
             aworkout_dict[wo_type]['Circuits'] = aworkout.get('# Circuits')
@@ -62,11 +65,12 @@ def format_records(records):
                     aworkout_dict[wo_type]['Lifts'][lift]['Difficulty']=diff
 
         if wo_type == 'Aerobic':
-            aworkout_dict[wo_type]['Distance'] = aworkout.get('Distance (miles)', '')
-            aworkout_dict[wo_type]['Speed'] = aworkout.get('Speed (treadmill)', '')
-            aworkout_dict[wo_type]['Pace'] = aworkout.get('Pace (min/mile)', '')
-            aworkout_dict[wo_type]['HRZ'] = aworkout.get('HRZ', '')
-            aworkout_dict[wo_type]['HR Avg'] = aworkout.get('HR Avg (bpm)', '')
+            aworkout_dict[wo_type]['Distance'] = aworkout.get('Distance (miles)', None)
+            aworkout_dict[wo_type]['Aerobic Type'] = aworkout.get('Aerobic Type', None)
+            aworkout_dict[wo_type]['Speed'] = aworkout.get('Speed (treadmill)', None)
+            aworkout_dict[wo_type]['Pace'] = aworkout.get('Pace (min/mile)', None)
+            aworkout_dict[wo_type]['HRZ'] = aworkout.get('HRZ', None)
+            aworkout_dict[wo_type]['HR Avg'] = aworkout.get('HR Avg (bpm)', None)
 
         if wo_type == 'Climbing':
             aworkout_dict[wo_type]['Location'] = aworkout.get('Indoor or Outdoor', None)
@@ -75,20 +79,79 @@ def format_records(records):
             aworkout_dict[wo_type]['Pitches 2 Grades Below RP'] = aworkout.get('# Pitches @ 2 grades below RP', None)
             aworkout_dict[wo_type]['Difficulty'] = aworkout.get('Climbing Grades (CSV)', None)
 
-        # if wo_type == 'Aerobic', etc
+        # if wo_type == 'Other':
+
         logger.debug('week: {}'.format(week_tot))
         id = create_wo_id(workouts_dict, week_tot)
         workouts_dict[id] = aworkout_dict
         logger.debug(aworkout_dict)
     
     logger.debug(workouts_dict)
+
+    with open ( 'data/newly_formatted.json', 'w') as f:
+        json.dump(workouts_dict, f, sort_keys=True)
         
     return workouts_dict
 
+def actuals_by_week(formatted_records):
+    """ Takes in the formatted records data and turns into a dict of
+    { <week_num>: {
+        week_tot_duration: __
+        period: __
+        <wo_type>: {
+            count: __
+            duration: __ (mins)
+            workouts: {
+                <wo_id, e.g. 6.1>: {
+                    date: __
+                    duration: __
+                    grade: __
+                    name: __
+                    }
+            }
+        }
+    }}
+    """
+
+    weekly = adict()
+    for k, v in formatted_records.items():
+        week_num = int(k.split('.')[0])
+        new = { 
+            k: {
+                'Date': v['Date'],
+                'Duration': v['Duration'],
+                'Grade': v['Grade'],
+                'Description': v['Description']
+            }
+        }
+
+        weekly[week_num][v['Type']]['workouts'].update(new)
+
+    for week, wo_type_dict in weekly.items(): # insert the summed duration for each wo_type and week
+        sum_dur_week = 0
+        for wo_key, wo_dict in wo_type_dict.items():
+            sum_dur_wo = 0
+            for wo in wo_dict['workouts'].values():
+                sum_dur_wo += wo['Duration']
+            wo_type_dict[wo_key]['Duration']= sum_dur_wo
+            if wo_key != "Climbing": # s.t. Total Duration does not include strictly climbing
+                sum_dur_week += sum_dur_wo
+        weekly[week]['Duration'] = round(sum_dur_week/60, 2) # as hours to the hundredths
+
+
+    with open ( 'data/actuals_by_week.json', 'w') as f:
+        json.dump(weekly, f, sort_keys=True)
+
+    return weekly
+
 
 if __name__=="__main__":
-    records = get_records()
+    from gspread_auth_w_jinja import get_records, gauth
+    offlineBool = False
+    client = gauth(offline=offlineBool)
+    records = get_records(client, offline=offlineBool)
     newly_formatted = format_records(records)
+    weekly = actuals_by_week(newly_formatted)
 
-    with open ( 'newly_formatted.json', 'w') as f:
-        json.dump(newly_formatted, f, sort_keys=True)
+    for k, v in weekly.items():
+        logger.debug(v['Duration'])
