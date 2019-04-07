@@ -1,9 +1,11 @@
 import pandas as pd
 import csv
+import sys
 import json
 import logging
 from helpers import get_training_week, get_lifts, create_wo_id
 from collections import defaultdict # for easy creation of nested dicts
+import pickle
 adict = lambda: defaultdict(adict) # usage: newdict = adict()
 
 logging.basicConfig(level=logging.DEBUG, filename='logs/analysis.log', filemode='w')
@@ -14,12 +16,12 @@ logger = logging.getLogger(__name__)
 
 def format_records(records):
     ## MAIN ##
-    fname = 'data/TFTNA Log (Responses) - Responses.csv'
 
     lifts = get_lifts(records)
 
     workouts_dict = adict()
     # for i,row in df.iterrows():
+    wo_types = []
     for aworkout in records:
         # TODO: How do we want to format this data?
         # format as a new dict under "workouts_dict", 
@@ -38,6 +40,8 @@ def format_records(records):
             abs=1
         else:
             abs=0
+
+        if wo_type not in wo_types: wo_types.append(wo_type) # for use in reformat_goals()
 
         descr = aworkout.get('Short Name', '')
         if descr == '': 
@@ -79,19 +83,24 @@ def format_records(records):
             aworkout_dict[wo_type]['Pitches 2 Grades Below RP'] = aworkout.get('# Pitches @ 2 grades below RP', None)
             aworkout_dict[wo_type]['Difficulty'] = aworkout.get('Climbing Grades (CSV)', None)
 
-        # if wo_type == 'Other':
 
         logger.debug('week: {}'.format(week_tot))
         id = create_wo_id(workouts_dict, week_tot)
         workouts_dict[id] = aworkout_dict
         logger.debug(aworkout_dict)
     
+    # write file of workouts types for goals to check against
+    with open( 'data/wo_types.txt', 'w') as f:
+        f.writelines("%s\n" % i for i in wo_types)
+
     logger.debug(workouts_dict)
 
     with open ( 'data/newly_formatted.json', 'w') as f:
         json.dump(workouts_dict, f, sort_keys=True)
         
     return workouts_dict
+
+
 
 def actuals_by_week(formatted_records):
     """ Takes in the formatted records data and turns into a dict of
@@ -145,6 +154,58 @@ def actuals_by_week(formatted_records):
     return weekly
 
 
+def get_goals(client, offline=False): 
+    if offline:
+        with open('data/goals_raw.p', 'rb') as pickle_file:
+            all_records = pickle.load(pickle_file)
+        return all_records
+
+    sheet_name = 'TFTNA Log (Responses)'
+    sheet = client.open(sheet_name).worksheet('Goals')
+    all_records = sheet.get_all_records()
+
+    pickle.dump(all_records, open("data/goals_raw.p", "wb"))
+
+    # For Display Only
+    all_records_as_dict = dict()
+    for i in range(0,len(all_records)):
+        all_records_as_dict[i] = all_records[i]
+
+    with open ( 'data/goals_raw.json', 'w') as f:
+        json.dump(all_records_as_dict, f)
+
+    return all_records
+
+def reformat_goals(records):
+    """ Takes in google sheet records from get_goals() and returns in a proper format """
+    # check goals against records from Responses
+    with open( "data/wo_types.txt", 'r') as f:
+        wo_types = [i.rstrip() for i in f.readlines()]
+
+    goal_dict = adict()
+
+    for goal in records:
+        week = goal['Week']
+        duration = goal['Total Minutes']
+        wo_type = goal['Type']
+        # assert that workout "types" are the same as in the Responses Sheet
+        if wo_type not in wo_types:
+            logger.debug('{} not in {}'.format(wo_type, wo_types))
+            sys.exit('Workout Type error, check Responses and Goals Sheets for discrepancies')
+
+        sum_dur = goal_dict[week][wo_type].get('Duration', 0) + duration
+        goal_dict[week][wo_type]['Duration'] = sum_dur
+
+        sum_dur_week = goal_dict[week].get('Duration', 0) + duration/60
+        goal_dict[week]['Duration'] = round(sum_dur_week, 2)
+
+    with open( 'data/formatted_goals.json', 'w') as f:
+        json.dump(goal_dict, f, sort_keys=True)
+
+    return goal_dict
+        
+
+
 if __name__=="__main__":
     from gspread_auth_w_jinja import get_records, gauth
     offlineBool = False
@@ -152,6 +213,8 @@ if __name__=="__main__":
     records = get_records(client, offline=offlineBool)
     newly_formatted = format_records(records)
     weekly = actuals_by_week(newly_formatted)
+    goals = get_goals(client, offline=offlineBool)
+    goals_fmt = reformat_goals(goals)
 
     for k, v in weekly.items():
         logger.debug(v['Duration'])

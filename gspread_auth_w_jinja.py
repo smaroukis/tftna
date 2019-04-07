@@ -3,7 +3,6 @@ import jinja2
 import logging
 from oauth2client.service_account import ServiceAccountCredentials
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-import pickle
 import json
 from reformat_records import *
 
@@ -41,29 +40,6 @@ def get_records(client, offline=False):
 
     return all_records
     
-def get_goals(client, offline=False): #TODO: NEED TO TEST
-    if offline:
-        with open('data/goals_raw.p', 'rb') as pickle_file:
-            all_records = pickle.load(pickle_file)
-        return all_records
-
-    sheet_name = 'TFTNA Log (Responses)'
-    sheet = client.open(sheet_name).worksheet('Goals')
-    all_records = sheet.get_all_records()
-
-    pickle.dump(all_records, open("data/goals_raw.p", "wb"))
-
-    # For Display Only
-    all_records_as_dict = dict()
-    for i in range(0,len(all_records)):
-        all_records_as_dict[i] = all_records[i]
-
-    with open ( 'data/goals_raw.json', 'w') as f:
-        json.dump(all_records_as_dict, f)
-
-    return all_records
-
-
 if __name__=="__main__":
     # Start Logging
     logging.basicConfig(level=logging.DEBUG, filename='logs/gspread.log', filemode='w')
@@ -77,12 +53,11 @@ if __name__=="__main__":
 
     client = gauth(offline=boolOffline)
     records = get_records(client, offline=boolOffline)
-    goals = get_goals(client, offline=boolOffline) # TODO: Test
+    goals = get_goals(client, offline=boolOffline) 
+    goals_fmt = reformat_goals(goals)
     newly_formatted = format_records(records)
     actuals = actuals_by_week(newly_formatted)
-
-    # with open ( 'newly_formatted.json', 'w') as f:
-        # json.dump(newly_formatted, f, sort_keys=True)
+    
 
     # Create Jinja Environment
     env = Environment(
@@ -93,4 +68,4 @@ if __name__=="__main__":
     template = env.get_template('index_w_jinja.html')
     
     with open('index.html', 'w') as f:
-        f.write(template.render(actuals=actuals, actuals_headers=['Week', 'Hours', 'Aerobic', 'Strength', 'Climbing', 'Climbing - ARC', 'Climbing - Crack']))
+        f.write(template.render(actuals=actuals, actuals_headers=['Week', 'Hours', 'Aerobic', 'Strength', 'Climbing', 'Climbing - ARC', 'Climbing - Crack'], goals=goals_fmt))

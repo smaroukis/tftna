@@ -29,6 +29,25 @@
             {% endfor %}
             </table>
         </div>
+        <div class="container">
+            <h1> Training Goals By Week </h1>
+            <table class="u-full-width">
+            <thead>
+                {% for c in actuals_headers %}
+                <th> {{ c }} </th>
+                {% endfor %}
+            </thead>
+            {% for week, goal in goals.items() %}
+            <tr>
+                <td>{{week}}</td>
+                <td>{{goal["Duration"]}}</td>
+                {% for wo_type in actuals_headers[2:] %}
+                    <td>{{goal[wo_type]["Duration"] if goal[wo_type]["Duration"] is number else "0"}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </table>
+        </div>
     </body>
 
 </html>
